@@ -1,3 +1,4 @@
+import 'package:duka_la_mkononi/src/domain/models/product.dart';
 import 'package:duka_la_mkononi/src/domain/models/response/product_response.dart';
 
 import '../../../domain/repositories/api_repository.dart';
@@ -13,9 +14,9 @@ class ApiRepositoryImpl extends BaseApiRepository implements ApiRepository {
 
 
   @override
-  Future<DataState<ProductResponse>> getProduct() {
+  Future<DataState<List<Product>>> getProduct() {
     // TODO: implement getProduct
-    return getStateOf<ProductResponse>(
+    return getStateOf<List<Product>>(
       request: () => _fakeApiService.getProducts(),
     );
   }

@@ -1,18 +1,25 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
+// To parse this JSON data, do
+//
+//     final product = productFromJson(jsonString);
+
 import 'dart:convert';
 
 import 'package:duka_la_mkononi/src/domain/models/rating.dart';
-import 'package:equatable/equatable.dart';
 
-class Product extends Equatable {
-  final int id;
-  final String title;
-  final double price;
-  final String description;
-  final String category;
-  final String image;
-  final Rating rating;
-  const Product({
+List<Product> productFromJson(String str) => List<Product>.from(json.decode(str).map((x) => Product.fromJson(x)));
+
+String productToJson(List<Product> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
+class Product {
+  int id;
+  String title;
+  double price;
+  String description;
+  Category category;
+  String image;
+  Rating rating;
+
+  Product({
     required this.id,
     required this.title,
     required this.price,
@@ -22,67 +29,37 @@ class Product extends Equatable {
     required this.rating,
   });
 
-  Product copyWith({
-    int? id,
-    String? title,
-    double? price,
-    String? description,
-    String? category,
-    String? image,
-    Rating? rating,
-  }) {
-    return Product(
-      id: id ?? this.id,
-      title: title ?? this.title,
-      price: price ?? this.price,
-      description: description ?? this.description,
-      category: category ?? this.category,
-      image: image ?? this.image,
-      rating: rating ?? this.rating,
-    );
-  }
+  factory Product.fromJson(Map<String, dynamic> json) => Product(
+    id: json["id"],
+    title: json["title"],
+    price: json["price"]?.toDouble(),
+    description: json["description"],
+    category: categoryValues.map[json["category"]]!,
+    image: json["image"],
+    rating: Rating.fromJson(json["rating"]),
+  );
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'id': id,
-      'title': title,
-      'price': price,
-      'description': description,
-      'category': category,
-      'image': image,
-      'rating': rating.toMap(),
-    };
-  }
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "title": title,
+    "price": price,
+    "description": description,
+    "category": categoryValues.reverse[category],
+    "image": image,
+    "rating": rating.toJson(),
+  };
+}
 
-  factory Product.fromMap(Map<String, dynamic> map) {
-    return Product(
-      id: map['id'] as int,
-      title: map['title'] as String,
-      price: map['price'] as double,
-      description: map['description'] as String,
-      category: map['category'] as String,
-      image: map['image'] as String,
-      rating: Rating.fromMap(map['rating'] as Map<String,dynamic>),
-    );
-  }
+enum Category {
+  ELECTRONICS,
+  JEWELERY,
+  MEN_S_CLOTHING,
+  WOMEN_S_CLOTHING
+}
 
-  String toJson() => json.encode(toMap());
-
-  factory Product.fromJson(String source) => Product.fromMap(json.decode(source) as Map<String, dynamic>);
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object> get props {
-    return [
-      id,
-      title,
-      price,
-      description,
-      category,
-      image,
-      rating,
-    ];
-  }
-  }
+final categoryValues = EnumValues({
+  "electronics": Category.ELECTRONICS,
+  "jewelery": Category.JEWELERY,
+  "men's clothing": Category.MEN_S_CLOTHING,
+  "women's clothing": Category.WOMEN_S_CLOTHING
+});

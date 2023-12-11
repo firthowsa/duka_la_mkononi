@@ -119,10 +119,10 @@ class ProductWidget extends StatelessWidget {
             Row(
               //mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                const Icon(Ionicons.time_outline, size: 20),
-                const SizedBox(width: 4),
+                // const Icon(Ionicons.time_outline, size: 20),
+                // const SizedBox(width: 4),
                 Text(
-                  product.category ?? '',
+                  product.category.name ?? '',
                   style: const TextStyle(
                     fontSize: 16,
                   ),

@@ -24,7 +24,7 @@ class RemoteProductsCubit extends BaseCubit<RemoteProductsState, List<Product>> 
       final response = await _apiRepository.getProduct();
 
       if (response is DataSuccess) {
-        final products = response.data!.products;
+        final products = response.data!;
         final noMoreData = products.length < 20;
 
         data.addAll(products);

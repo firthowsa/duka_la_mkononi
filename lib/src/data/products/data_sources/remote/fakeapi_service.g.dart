@@ -21,13 +21,13 @@ class _FakeApiService implements FakeApiService {
   String? baseUrl;
 
   @override
-  Future<HttpResponse<ProductResponse>> getProducts() async {
+  Future<HttpResponse<List<Product>>> getProducts() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<HttpResponse<ProductResponse>>(Options(
+    final _result = await _dio.fetch<List<dynamic>>(
+        _setStreamType<HttpResponse<List<Product>>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -43,7 +43,9 @@ class _FakeApiService implements FakeApiService {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = ProductResponse.fromMap(_result.data!);
+    var value = _result.data!
+        .map((dynamic i) => Product.fromJson(i as Map<String, dynamic>))
+        .toList();
     final httpResponse = HttpResponse(value, _result);
     return httpResponse;
   }
