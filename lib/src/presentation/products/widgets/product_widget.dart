@@ -1,139 +1,115 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../../domain/models/product.dart';
+import 'package:intl/intl.dart';
 
 class ProductWidget extends StatelessWidget {
   final Product product;
   final bool isRemovable;
   final void Function(Product product)? onRemove;
-  final void Function(Product product)? onArticlePressed;
+  final void Function(Product product)? onProductPressed;
+
 
   const ProductWidget({
     Key? key,
     required this.product,
-    this.onArticlePressed,
+    this.onProductPressed,
     this.isRemovable = false,
     this.onRemove,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: _onTap,
-      child: Container(
-        padding: const EdgeInsetsDirectional.only(
-            start: 14, end: 14,  top: 7),
-        height: MediaQuery.of(context).size.height / 2.2,
-        // alignment: Alignment.center,
-        child: Card(
-          child: Padding(
-            padding: const EdgeInsetsDirectional.only(
-                start: 16, end: 16,  top: 16),
-            child: Column(
-              children: [
-                _buildImage(context),
-                _buildTitleAndDescription(),
-                _buildRemovableArea(),
-              ],
-            ),
-          ),
+      child: Card(
+        //clipBehavior: Clip.antiAlias,
+
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+         _buildImage(context),
+         const SizedBox(height: 8.0),
+        _buildTitleAndDescription(context),
+        _buildRemovableArea(),
+          ],
         ),
       ),
     );
   }
 
   Widget _buildImage(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(20.0),
-      child: Container(
-        // width: MediaQuery.of(context).size.width / 3,
-        height: 180,
-        width: 400,
+    return AspectRatio(
+      aspectRatio: 18 / 11,
 
-        // height: double.maxFinite,
-        decoration: BoxDecoration(
-          color: Colors.black.withOpacity(0.08),
-        ),
-        child: Image.network(
-          product.image ?? '',
-          fit: BoxFit.cover,
-          errorBuilder: (_, __, ___) {
-            return const Center(
-              child: Text(
-                '404\nNOT FOUND',
-                textAlign: TextAlign.center,
-              ),
-            );
-          },
-        ),
+      child: Image.network(
+        product.image ?? '',
+        fit: BoxFit.fitWidth,
+        errorBuilder: (_, __, ___) {
+          return const Center(
+            child: Text(
+              '404\nNOT FOUND',
+              textAlign: TextAlign.center,
+            ),
+          );
+        },
       ),
     );
   }
 
-  Widget _buildTitleAndDescription() {
+
+  Widget _buildTitleAndDescription(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
+    final NumberFormat formatter = NumberFormat.simpleCurrency(
+        locale: Localizations.localeOf(context).toString());
     return Expanded(
+
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8),
-        // padding: const EdgeInsetsDirectional.only(
-        //     start: 14, end: 14,  top: 7),
+        padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
+         // mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             // Title
-            Expanded(
-              child: Text(
-                product.title ?? '',
-                maxLines: 3,
-                overflow: TextOverflow.ellipsis,
-                style: const TextStyle(
-                  fontFamily: 'Butler',
-                  fontWeight: FontWeight.w900,
-                  fontSize: 22,
+            Text(
+              product.title ?? '',
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              style: theme.textTheme.titleSmall,
 
-                ),
-              ),
+            ),
+            const SizedBox(height: 8.0),
+
+            Text(
+              formatter.format(product.price),
+              style: theme.textTheme.bodyMedium,
             ),
 
-            // Description
-            // Expanded(
-            //   child: Padding(
-            //     padding: const EdgeInsets.only(top: 7),
-            //     child: Text(
-            //       article.description ?? '',
-            //       maxLines: 2,
-            //       overflow: TextOverflow.ellipsis,
-            //       style: const TextStyle(
-            //         fontFamily: 'Butler',
-            //         //fontWeight: FontWeight.w100,
-            //         fontSize: 14,
+            const SizedBox(height: 8.0),
             //
-            //       ),
-            //     ),
-            //   ),
-            // ),
-
-            // Datetime
-            Row(
-              //mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                // const Icon(Ionicons.time_outline, size: 20),
-                // const SizedBox(width: 4),
-                Text(
-                  product.category.name ?? '',
-                  style: const TextStyle(
-                    fontSize: 16,
-                  ),
-                ),
-              ],
+            RatingBarIndicator(
+              rating: product.rating.rate,
+              itemBuilder: (context, index) => const Icon(
+                Icons.star,
+                color: Colors.amber,
+              ),
+              itemCount: 5,
+              itemSize: 20.0,
+              //direction: Axis.vertical,
             ),
+            const SizedBox(height: 8.0),
           ],
         ),
       ),
     );
   }
+
 
   Widget _buildRemovableArea() {
     if (isRemovable) {
@@ -145,12 +121,11 @@ class ProductWidget extends StatelessWidget {
         ),
       );
     }
-    return Container();
-  }
+    return Container();  }
 
   void _onTap() {
-    if (onArticlePressed != null) {
-      onArticlePressed?.call(product);
+    if (onProductPressed != null) {
+      onProductPressed?.call(product);
     }
   }
 

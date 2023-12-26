@@ -9,8 +9,8 @@ class AppRouter extends $AppRouter {
   @override
   List<AutoRoute> get routes => [
     /// routes go here
-     AutoRoute(page: ProductView.page,initial: true)
-    // AutoRoute(page: ArticleDetailsView.page),
+     AutoRoute(page: ProductView.page,initial: true),
+     AutoRoute(page: ProductDetailsView.page)
     // AutoRoute(page: SavedArticlesView.page)
   ];
 }
