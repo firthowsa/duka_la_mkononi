@@ -18,7 +18,6 @@ Future<void> main() async {
 class MyApp extends StatelessWidget {
   MyApp({super.key});
 
-  final _appRouter = AppRouter();
 
   // This widget is the root of your application.
   @override
@@ -40,7 +39,7 @@ class MyApp extends StatelessWidget {
       child :OKToast(
         child: MaterialApp.router(
           debugShowCheckedModeBanner: false,
-          routerConfig: _appRouter.config(),
+          routerConfig: router,
           theme: AppTheme.light,
           darkTheme: AppTheme.dark
         ),

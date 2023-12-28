@@ -1,16 +1,31 @@
+import 'package:duka_la_mkononi/src/domain/models/product.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 
-import 'package:auto_route/auto_route.dart';
+import '../../presentation/products/views/product_details.dart';
+import '../../presentation/products/views/products_view.dart';
 
-import  'app_router.gr.dart';
+final GoRouter router = GoRouter(
+  routes: <RouteBase>[
+    GoRoute(
+      path: '/',
+      builder: (BuildContext context, GoRouterState state) {
+        return const ProductView();
+      },
+      routes: <RouteBase>[
+        // GoRoute(
+        //   path: 'SavedArticlesView',
+        //   builder: (BuildContext context, GoRouterState state) {
+        //     return const SavedArticlesView();
+        //   },
+        // ),
 
-@AutoRouterConfig()
-class AppRouter extends $AppRouter {
+        GoRoute(
+            path: 'ProductDetailsView',
+            builder:(BuildContext context, GoRouterState state) => ProductDetailsView(product: state.extra as Product)
 
-  @override
-  List<AutoRoute> get routes => [
-    /// routes go here
-     AutoRoute(page: ProductView.page,initial: true),
-     AutoRoute(page: ProductDetailsView.page)
-    // AutoRoute(page: SavedArticlesView.page)
-  ];
-}
+        ),
+      ],
+    ),
+  ],
+);
