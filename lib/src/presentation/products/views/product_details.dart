@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
 
@@ -29,8 +30,9 @@ class ProductDetailsView extends HookWidget {
         child: Card(
           child: Column(
             children: [
-              _buildArticleTitleAndDate(),
               _buildArticleImage(),
+            _buildArticleTitleAndDate(),
+
               _buildArticleDescription(),
             ],
           ),
@@ -63,7 +65,6 @@ class ProductDetailsView extends HookWidget {
           const SizedBox(height: 14),
           Row(
             children: [
-              const Icon(Ionicons.time_outline, size: 16),
               const SizedBox(width: 4),
               Text(
                 product.category.name ?? '',
@@ -79,11 +80,12 @@ class ProductDetailsView extends HookWidget {
   Widget _buildArticleImage() {
     return Container(
       width: double.maxFinite,
-      height: 250,
+      height: 300,
       margin: const EdgeInsets.only(top: 14),
+      color: Colors.white,
       child: Image.network(
         product.image ?? '',
-        fit: BoxFit.cover,
+        fit: BoxFit.contain,
         alignment: Alignment.topCenter,
       ),
     );
@@ -92,10 +94,44 @@ class ProductDetailsView extends HookWidget {
   Widget _buildArticleDescription() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 18),
-      child: Text(
-        '${product.description}\n\n${product.rating.rate}',
-        style: const TextStyle(fontSize: 16),
+      child: Column(
+        children: [
+          Text(
+            product.description,
+            style: const TextStyle(fontSize: 16),
+          ),
+
+          const SizedBox(height: 16,) ,
+
+         Row(
+           children: [
+             Text(product.rating.rate.toString()),
+             RatingBarIndicator(
+                  rating: product.rating.rate,
+                  itemBuilder: (context, index) => const Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+                  itemCount: 5,
+                  itemSize: 20.0,
+            ) ,
+            Text("(${product.rating.count.toString()})")
+
+        ],
       ),
+
+       const SizedBox(height: 32,) ,
+
+      Row(
+        children: [
+          FilledButton(
+                  onPressed: (){},
+                  child: const Text("Add To Cart")
+              ),
+        ],
+      )
+      ]
+      )
     );
   }
 }

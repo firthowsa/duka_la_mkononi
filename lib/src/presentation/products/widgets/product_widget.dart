@@ -14,12 +14,12 @@ class ProductWidget extends StatelessWidget {
 
 
   const ProductWidget({
-    Key? key,
+    super.key,
     required this.product,
     this.onProductPressed,
     this.isRemovable = false,
     this.onRemove,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -47,17 +47,20 @@ class ProductWidget extends StatelessWidget {
     return AspectRatio(
       aspectRatio: 18 / 11,
 
-      child: Image.network(
-        product.image ?? '',
-        fit: BoxFit.fitWidth,
-        errorBuilder: (_, __, ___) {
-          return const Center(
-            child: Text(
-              '404\nNOT FOUND',
-              textAlign: TextAlign.center,
-            ),
-          );
-        },
+      child: Container(
+        color: Colors.white,
+        child: Image.network(
+          product.image ?? '',
+          fit: BoxFit.contain,
+          errorBuilder: (_, __, ___) {
+            return const Center(
+              child: Text(
+                '404\nNOT FOUND',
+                textAlign: TextAlign.center,
+              ),
+            );
+          },
+        ),
       ),
     );
   }
@@ -73,7 +76,7 @@ class ProductWidget extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(16.0, 12.0, 16.0, 8.0),
         child: Column(
          // mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             // Title
@@ -81,29 +84,36 @@ class ProductWidget extends StatelessWidget {
               product.title ?? '',
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: theme.textTheme.titleSmall,
+              style: theme.textTheme.titleMedium,
 
             ),
+
+
+            const SizedBox(height: 8.0),
+            //
+            Row(
+              children: [
+                // Text(product.rating.rate.toString()),
+                RatingBarIndicator(
+                  rating: product.rating.rate,
+                  itemBuilder: (context, index) => const Icon(
+                    Icons.star,
+                    color: Colors.amber,
+                  ),
+                  itemCount: 5,
+                  itemSize: 20.0,
+                  //direction: Axis.vertical,
+                ),
+                Text("(${product.rating.count.toString()})")
+              ],
+            ),
+
             const SizedBox(height: 8.0),
 
             Text(
               formatter.format(product.price),
               style: theme.textTheme.bodyMedium,
             ),
-
-            const SizedBox(height: 8.0),
-            //
-            RatingBarIndicator(
-              rating: product.rating.rate,
-              itemBuilder: (context, index) => const Icon(
-                Icons.star,
-                color: Colors.amber,
-              ),
-              itemCount: 5,
-              itemSize: 20.0,
-              //direction: Axis.vertical,
-            ),
-            const SizedBox(height: 8.0),
           ],
         ),
       ),

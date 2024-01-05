@@ -56,12 +56,13 @@ class _NavigationExampleState extends State<NavigationExample> {
 }
 
 
+
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Text('Favorites Screen'),
     );
   }
@@ -72,8 +73,78 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Text('Profile Screen'),
     );
   }
 }
+
+class NavRailExample extends StatefulWidget {
+  const NavRailExample({super.key});
+
+  @override
+  State<NavRailExample> createState() => _NavRailExampleState();
+}
+
+class _NavRailExampleState extends State<NavRailExample> {
+  int _selectedIndex = 0;
+  NavigationRailLabelType labelType = NavigationRailLabelType.all;
+  bool showLeading = false;
+  bool showTrailing = false;
+  double groupAlignment = -1.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return NavigationRail(
+      selectedIndex: _selectedIndex,
+      groupAlignment: groupAlignment,
+      onDestinationSelected: (int index) {
+        setState(() {
+          _selectedIndex = index;
+        });
+      },
+      labelType: labelType,
+      leading: showLeading
+          ? FloatingActionButton(
+        elevation: 0,
+        onPressed: () {
+          // Add your onPressed code here!
+        },
+        child: const Icon(Icons.add),
+      )
+          : const SizedBox(),
+      trailing: showTrailing
+          ? IconButton(
+        onPressed: () {
+          // Add your onPressed code here!
+        },
+        icon: const Icon(Icons.more_horiz_rounded),
+      )
+          : const SizedBox(),
+      destinations: const <NavigationRailDestination>[
+        NavigationRailDestination(
+          icon: Icon(Icons.home),
+          selectedIcon: Icon(Icons.home_outlined),
+          label: Text('Home'),
+        ),
+        NavigationRailDestination(
+          icon: Icon(Icons.shopping_cart),
+          selectedIcon: Icon(Icons.shopping_cart),
+          label: Text('Cart'),
+        ),
+        NavigationRailDestination(
+          icon: Icon(Icons.favorite),
+          selectedIcon: Icon(Icons.favorite),
+          label: Text('Favorite'),
+        ),
+
+        NavigationRailDestination(
+          icon: Icon(Icons.account_circle),
+          selectedIcon: Icon(Icons.account_circle),
+          label: Text('Profile'),
+        ),
+      ],
+    );
+  }
+}
+

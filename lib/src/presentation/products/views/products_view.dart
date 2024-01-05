@@ -33,7 +33,7 @@ class ProductView extends HookWidget {
     }, const []);
 
     return Scaffold(
-      bottomNavigationBar: const NavigationExample(),
+      bottomNavigationBar: MediaQuery.of(context).size.width <640? NavigationExample():null,
       body: BlocBuilder<RemoteProductsCubit, RemoteProductsState>(
         builder: (_, state) {
           switch (state.runtimeType) {
@@ -63,8 +63,15 @@ class ProductView extends HookWidget {
       ) {
     return LayoutBuilder(
       builder: (context,constraint) {
-        if (constraint.maxWidth>600){
-          return _wideLayout(scrollController, products, noMoreData);
+        if (constraint.maxWidth>640){
+          return Container();
+          //   Row(
+          //   children: [
+          //     const Expanded(flex:1,child: NavRailExample()),
+          //     const VerticalDivider(thickness: 1, width: 1),
+          //     Expanded(flex:3,child: _wideLayout(scrollController, products, noMoreData)),
+          //   ],
+          // );
 
         }else {
           return _narrowLayout(scrollController, products, noMoreData);
@@ -91,11 +98,11 @@ class ProductView extends HookWidget {
 
         SliverGrid(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2, // You can adjust the number of columns here
+            crossAxisCount: 4, // You can adjust the number of columns here
             crossAxisSpacing: 8.0, // Adjust the spacing between columns
             mainAxisSpacing: 8.0, // Adjust the spacing between rows
             //childAspectRatio: 8/9,
-           // mainAxisExtent: 300,
+           mainAxisExtent: 320,
           ),
           delegate: SliverChildBuilderDelegate(
                 (context, index) =>
