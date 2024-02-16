@@ -2,15 +2,15 @@ import 'dart:io';
 import 'package:retrofit/retrofit.dart';
 import 'package:dio/dio.dart';
 
-import '../../../../domain/models/product.dart';
+import '../../../../domain/cart/models/cart.dart';
 import '../../../../utils/constants/strings.dart';
 
-part 'fakeapi_service.g.dart';
+part 'cart_api_service.g.dart';
 
 @RestApi(baseUrl: baseUrl, parser: Parser.JsonSerializable)
-abstract class FakeApiService {
-  factory FakeApiService(Dio dio, {String baseUrl}) = _FakeApiService;
+abstract class CartApiService {
+  factory CartApiService(Dio dio, {String baseUrl}) = _CartApiService;
 //abstracted method that would be responsible of getting the data from the server,
-  @GET('/products')
-  Future<HttpResponse<List<Product>>> getProducts();
+  @GET('/carts/user/2')
+  Future<HttpResponse<List<Cart>>> getCarts();
 }

@@ -1,9 +1,7 @@
-import 'package:auto_route/annotations.dart';
-import 'package:auto_route/auto_route.dart';
+
 import 'package:duka_la_mkononi/src/domain/models/product.dart';
 import 'package:duka_la_mkononi/src/presentation/products/cubits/remote_products/remote_products_cubit.dart';
 import 'package:duka_la_mkononi/src/presentation/products/views/nav.dart';
-import 'package:duka_la_mkononi/src/presentation/products/views/product_details.dart';
 import 'package:duka_la_mkononi/src/utils/extensions/scroll_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +31,7 @@ class ProductView extends HookWidget {
     }, const []);
 
     return Scaffold(
-      bottomNavigationBar: MediaQuery.of(context).size.width <640? NavigationExample():null,
+      bottomNavigationBar: MediaQuery.of(context).size.width <640? const CustomNavigation():null,
       body: BlocBuilder<RemoteProductsCubit, RemoteProductsState>(
         builder: (_, state) {
           switch (state.runtimeType) {
@@ -94,8 +92,8 @@ class ProductView extends HookWidget {
           pinned: true,
           title: Text("Duka La mkononi"),
 
-        ),
 
+        ),
         SliverGrid(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 4, // You can adjust the number of columns here
@@ -134,12 +132,20 @@ class ProductView extends HookWidget {
     return CustomScrollView(
       controller: scrollController,
       slivers: [
-        const SliverAppBar(
+        SliverAppBar(
           pinned: true,
-          title: Text("Duka La mkononi"),
-
+          title: const Text("Duka La mkononi"),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.search),
+              onPressed: () {
+                // Add your search functionality here
+                // This could be opening a search page or showing a search bar in the app bar itself.
+                print("Search button pressed!");
+              },
+            ),
+          ],
         ),
-
         SliverGrid(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2, // You can adjust the number of columns here
@@ -169,4 +175,22 @@ class ProductView extends HookWidget {
     );
 
   }
+
+  // Widget _categories() {
+  //   return Container(
+  //     height: 100, // Adjust the height as per your requirement
+  //     child: ListView.builder(
+  //       scrollDirection: Axis.horizontal,
+  //       itemCount: categories.length,
+  //       itemBuilder: (BuildContext context, int index) {
+  //         return Container(
+  //           margin: EdgeInsets.all(8),
+  //           child: Chip(
+  //             label: Text(categories[index]),
+  //           ),
+  //         );
+  //       },
+  //     ),
+  //   );
+  // }
 }

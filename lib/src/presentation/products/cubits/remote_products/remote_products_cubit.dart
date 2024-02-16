@@ -35,4 +35,5 @@ class RemoteProductsCubit extends BaseCubit<RemoteProductsState, List<Product>> 
         emit(RemoteProductsFailed(error: response.error));
       }
     });
-  }}
+  }
+}

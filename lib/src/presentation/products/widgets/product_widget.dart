@@ -30,12 +30,17 @@ class ProductWidget extends StatelessWidget {
       child: Card(
         //clipBehavior: Clip.antiAlias,
 
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Stack(
+         // crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-         _buildImage(context),
-         const SizedBox(height: 8.0),
-        _buildTitleAndDescription(context),
+
+        Column(
+          children: [
+            _buildImage(context),
+             const SizedBox(height: 8.0),
+                   _buildTitleAndDescription(context),
+          ],
+        ),
         _buildRemovableArea(),
           ],
         ),
@@ -131,7 +136,24 @@ class ProductWidget extends StatelessWidget {
         ),
       );
     }
-    return Container();  }
+    return Positioned(
+      top: 4,
+      right: 4,
+      child: GestureDetector(
+        onTap: _onRemove,
+        child: Container(
+          padding: const EdgeInsets.all(2),
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            //color: Colors.deepOrange,
+          ),
+          child: const Icon(
+            Icons.favorite_outline,
+            color: Color(0xFFFFB1C8),            ),
+        ),
+      ),
+    );
+  }
 
   void _onTap() {
     if (onProductPressed != null) {

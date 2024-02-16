@@ -6,8 +6,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:go_router/go_router.dart';
 import 'package:ionicons/ionicons.dart';
+import 'package:oktoast/oktoast.dart';
 
 import '../../../domain/models/product.dart';
+import '../cubits/local_products/local_products_cubit.dart';
 
 class ProductDetailsView extends HookWidget {
   final Product product;
@@ -16,7 +18,7 @@ class ProductDetailsView extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final localArticlesCubit = BlocProvider.of<LocalArticlesCubit>(context);
+    // final localProductsCubit = BlocProvider.of<LocalProductsCubit>(context);
 
     return Scaffold(
       appBar: AppBar(
@@ -33,7 +35,7 @@ class ProductDetailsView extends HookWidget {
               _buildArticleImage(),
             _buildArticleTitleAndDate(),
 
-              _buildArticleDescription(),
+              _buildArticleDescription(context),
             ],
           ),
         ),
@@ -91,7 +93,9 @@ class ProductDetailsView extends HookWidget {
     );
   }
 
-  Widget _buildArticleDescription() {
+  Widget _buildArticleDescription(BuildContext context) {
+    final localProductsCubit = BlocProvider.of<LocalProductsCubit>(context);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 18),
       child: Column(
@@ -125,7 +129,10 @@ class ProductDetailsView extends HookWidget {
       Row(
         children: [
           FilledButton(
-                  onPressed: (){},
+              onPressed: () {
+                localProductsCubit.saveProduct(product: product);
+                showToast('Product Added to Cart');
+              },
                   child: const Text("Add To Cart")
               ),
         ],

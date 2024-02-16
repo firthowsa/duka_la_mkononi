@@ -5,12 +5,15 @@
 import 'dart:convert';
 
 import 'package:duka_la_mkononi/src/domain/models/rating.dart';
+import 'package:duka_la_mkononi/src/utils/constants/strings.dart';
+import 'package:floor/floor.dart';
 
 List<Product> productFromJson(String str) => List<Product>.from(json.decode(str).map((x) => Product.fromJson(x)));
 
 String productToJson(List<Product> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
-
+@Entity(tableName: productsTableName)
 class Product {
+  @PrimaryKey()
   int id;
   String title;
   double price;

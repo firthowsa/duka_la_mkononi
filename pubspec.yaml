@@ -57,6 +57,8 @@ dependencies:
   flutter_rating_bar: ^4.0.1
   intl: ^0.19.0
   go_router: ^13.0.0
+  introduction_screen: ^3.1.12
+
 
 
 dev_dependencies:
@@ -72,10 +74,11 @@ dev_dependencies:
   flutter_lints: ^ 3.0.1
   auto_route_generator: ^7.3.2
   retrofit_generator: ^8.0.1
+  floor_generator: ^1.4.2
+
   carousel_slider: ^4.0.0
 #  floor_generator: ^1.4.2
-  build_runner: ^2.4.6
-
+  build_runner: ^2.1.2
 
 
 flutter_launcher_icons:
@@ -107,6 +110,15 @@ flutter:
   # included with your application, so that you can use the icons in
   # the material Icons class.
   uses-material-design: true
+  assets:
+    - assets/promotion_banner.png
+    - assets/welcome1.jpeg
+    - assets/signin.jpeg
+    - assets/welcome2.jpeg
+    - assets/shopping1.jpeg
+    - assets/shopping2.png
+
+
 
   # To add assets to your application, add an assets section, like this:
   # assets:

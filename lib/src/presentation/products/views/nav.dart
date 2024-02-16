@@ -5,65 +5,93 @@ import 'package:flutter/material.dart';
 
 
 
-class NavigationExample extends StatefulWidget {
-  const NavigationExample({super.key});
+import 'package:go_router/go_router.dart';
+
+class CustomNavigation extends StatefulWidget {
+  const CustomNavigation({super.key});
 
   @override
-  State<NavigationExample> createState() => _NavigationExampleState();
+  State<CustomNavigation> createState() => _CustomNavigationState();
 }
 
-class _NavigationExampleState extends State<NavigationExample> {
+class _CustomNavigationState extends State<CustomNavigation> {
   int currentPageIndex = 0;
-  final List<Widget> _tabs = [
-    const ProductView(),
-    FavoritesScreen(),
-    ProfileScreen(),
-  ];
 
   @override
   Widget build(BuildContext context) {
-    return  NavigationBar(
-        onDestinationSelected: (int index) {
-          setState(() {
-            currentPageIndex = index;
-          });
-        },
-        // indicatorColor: Colors.blueAccent,
-        selectedIndex: currentPageIndex,
-        destinations: const <Widget>[
-          NavigationDestination(
-            selectedIcon: Icon(Icons.home),
-            icon: Icon(Icons.home_outlined),
-            label: 'Home',
-          ),
-          NavigationDestination(
-            icon:Icon(Icons.shopping_cart),
-            label: 'Cart',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.favorite),
-            label: 'Favorite',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.account_circle),
-            label: 'Profile',
-          ),
-        ]
-      );
+    return NavigationBar(
+      onDestinationSelected: (int index) {
+        setState(() {
+          currentPageIndex = index;
+        }
+        );
 
+        // Use Navigator to navigate to the selected page
+        _navigateToPage(context, currentPageIndex);
+      },
+      // indicatorColor: Colors.blueAccent,
+      selectedIndex: currentPageIndex,
+      destinations: const <NavigationDestination>[
+        NavigationDestination(
+          icon: Icon(Icons.home_outlined),
+          label: 'Home',
+        ),
+        NavigationDestination(
+          icon: Icon(Icons.shopping_cart),
+          label: 'Cart',
+        ),
+        NavigationDestination(
+          icon: Icon(Icons.favorite),
+          label: 'Favorite',
+        ),
+        NavigationDestination(
+          icon: Icon(Icons.account_circle),
+          label: 'Profile',
+        ),
+      ],
+    );
+  }
 
+  void _navigateToPage(BuildContext context, int pageIndex) {
+    switch (pageIndex) {
+      case 0:
+        print('Navigating to Home');
+        context.go("/");
+        break;
+      case 1:
+        print('Navigating to cart');
+
+        context.go("/CartsView");
+        break;
+      case 2:
+        print('Navigating to pr');
+
+        context.go("/FavoritesView");
+        break;
+
+      case 3:
+        context.go("/ProfileScreen");
+        break;
+    // Add more cases for additional tabs/screens
+    }
   }
 }
 
 
 
 class FavoritesScreen extends StatelessWidget {
-  const FavoritesScreen({super.key});
+  const FavoritesScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Favorites Screen'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Favorites Screen'),
+      ),
+      body: const Center(
+        child: Text('Favorites Screen Content'),
+      ),
+      bottomNavigationBar: const CustomNavigation(),
     );
   }
 }
@@ -73,8 +101,14 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text('Profile Screen'),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Profile Screen'),
+      ),
+      body: const Center(
+        child: Text('Profile Screen Content'),
+      ),
+      bottomNavigationBar: const CustomNavigation(),
     );
   }
 }
