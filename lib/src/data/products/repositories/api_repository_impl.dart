@@ -1,5 +1,4 @@
 import 'package:duka_la_mkononi/src/domain/models/product.dart';
-import 'package:duka_la_mkononi/src/domain/models/response/product_response.dart';
 
 import '../../../domain/repositories/api_repository.dart';
 import '../../../utils/resources/data_state.dart';

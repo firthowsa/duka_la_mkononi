@@ -1,4 +1,6 @@
-import 'package:duka_la_mkononi/src/domain/models/product.dart';
+
+
+import '../models/product.dart';
 
 abstract class DatabaseRepository {
   Future<List<Product>> getSavedProducts();

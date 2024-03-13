@@ -134,10 +134,11 @@ class ProductView extends HookWidget {
       slivers: [
         SliverAppBar(
           pinned: true,
-          title: const Text("Duka La mkononi"),
+          // leading: const Icon(Icons.account_circle),
+          title: const Text("Hi Firthowsa"),
           actions: [
             IconButton(
-              icon: const Icon(Icons.search),
+              icon: const Icon(Icons.notifications),
               onPressed: () {
                 // Add your search functionality here
                 // This could be opening a search page or showing a search bar in the app bar itself.
@@ -146,6 +147,72 @@ class ProductView extends HookWidget {
             ),
           ],
         ),
+
+        SliverList(
+          delegate: SliverChildListDelegate(
+            [
+              ListTile(
+                // leading: const Icon(Icons.search),
+                title: SizedBox(
+                  height: 40,
+                  child: TextField(
+                    decoration: const InputDecoration(
+                      hintText: 'Search...',
+                      border: OutlineInputBorder(),
+                      prefixIcon: Icon(Icons.search),
+                    ),
+                    onChanged: (value) {
+                      // Handle search query changes
+                      print('Search query: $value');
+                    },
+                  ),
+                ),
+              ),
+              // Add more list items as needed
+            ],
+          ),
+        ),
+
+
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+              List<String> imagePaths = [ 'assets/black-friday-sale-banner.jpg']; // Paths to your images
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Card(
+                  child: Image.asset(
+                    imagePaths[index],
+                    width: 400,
+                    height: 200, // Adjust width and height as needed
+                    fit: BoxFit.cover, // Adjust the fit as needed
+                  ),
+                ),
+              );
+            },
+            childCount: 1, // Number of images in the list
+          ),
+        ),
+
+        SliverList(
+          delegate: SliverChildBuilderDelegate(
+                (BuildContext context, int index) {
+              return Padding(
+                padding: const EdgeInsets.all(0.0),
+                child: SizedBox(
+                  height: 100, // Adjust width and height as needed
+                  child: _categories(), // Include _categories() widget here
+                ),
+              );
+            },
+            childCount: 1, // Number of items in the list (only one instance of _categories() widget)
+          ),
+        ),
+
+
+
+
+
         SliverGrid(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2, // You can adjust the number of columns here
@@ -176,21 +243,23 @@ class ProductView extends HookWidget {
 
   }
 
-  // Widget _categories() {
-  //   return Container(
-  //     height: 100, // Adjust the height as per your requirement
-  //     child: ListView.builder(
-  //       scrollDirection: Axis.horizontal,
-  //       itemCount: categories.length,
-  //       itemBuilder: (BuildContext context, int index) {
-  //         return Container(
-  //           margin: EdgeInsets.all(8),
-  //           child: Chip(
-  //             label: Text(categories[index]),
-  //           ),
-  //         );
-  //       },
-  //     ),
-  //   );
-  // }
+  Widget _categories() {
+    List<String> categories = ["All","electronics", "jewelry", "men's clothing", "women's clothing"]; // Paths to your images
+
+    return SizedBox(
+      height: 100, // Adjust the height as per your requirement
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: categories.length,
+        itemBuilder: (BuildContext context, int index) {
+          return Container(
+            margin: const EdgeInsets.all(8),
+            child: Chip(
+              label: Text(categories[index]),
+            ),
+          );
+        },
+      ),
+    );
+  }
 }
