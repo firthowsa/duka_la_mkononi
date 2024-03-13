@@ -2,6 +2,29 @@
 
 An e-commerce app built using Flutter that consumes The [Fake Api](https://fakestoreapi.com/) to display products
 
+##  light theme
+
+<div align="center">
+  <img src="https://github.com/firthowsa/tech_crunch/blob/main/screenshots/home.png" alt="Image 1" width="300" height="700">
+  
+  <img src="https://github.com/firthowsa/tech_crunch/blob/main/screenshots/cart.png" alt="Image 2" width="300" height="700">
+  
+  <img src="https://github.com/firthowsa/tech_crunch/blob/main/screenshots/favorite.png" alt="Image 2" width="300" height="700">
+
+</div>
+
+
+
+
+##  Dark theme
+<div align="center">
+  <img src="https://github.com/firthowsa/tech_crunch/blob/main/screenshots/home_dark1.png" alt="Image 1" width="300" height="700">
+  <img src="https://github.com/firthowsa/tech_crunch/blob/main/screenshots/cart_dark.png" alt="Image 2" width="300" height="700">
+  <img src="https://github.com/firthowsa/tech_crunch/blob/main/screenshots/favorite_dark.png" alt="Image 2" width="300" height="700">
+
+</div>
+
+
 ## Getting Started
 To run this project,
 
