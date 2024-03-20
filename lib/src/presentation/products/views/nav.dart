@@ -70,7 +70,7 @@ class _CustomNavigationState extends State<CustomNavigation> {
         break;
 
       case 3:
-        context.go("/ProfileScreen");
+        context.go("/ProfileView");
         break;
     // Add more cases for additional tabs/screens
     }

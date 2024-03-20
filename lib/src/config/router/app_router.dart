@@ -8,6 +8,7 @@ import '../../presentation/products/views/favorite_view.dart';
 import '../../presentation/products/views/nav.dart';
 import '../../presentation/products/views/product_details.dart';
 import '../../presentation/products/views/products_view.dart';
+import '../../presentation/profile/views/profile_view.dart';
 
 final GoRouter router = GoRouter(
   routes: <RouteBase>[
@@ -29,6 +30,13 @@ final GoRouter router = GoRouter(
             builder:(BuildContext context, GoRouterState state) => ProductDetailsView(product: state.extra as Product)
 
         ),
+
+        GoRoute(
+            path: 'ProfileView',
+            builder:(BuildContext context, GoRouterState state) => const ProfileView()
+
+        ),
+
 
         GoRoute(
             path: 'CartsView',
