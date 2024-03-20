@@ -22,6 +22,7 @@ class ProductView extends HookWidget {
     final remoteproductscubit = BlocProvider.of<RemoteProductsCubit>(context);
     final scrollController = useScrollController();
 
+
     useEffect(() {
       scrollController.onScrollEndsListener(() {
         remoteproductscubit.getProducts();
